@@ -88,38 +88,72 @@ var upperCasedCharacters = [
   'Z'
 ];
 
+
+
 // Function to prompt user for password options
-function getPasswordOptions() {
- password.length > 8, || password.length < 128
- var specialCharacters
- var numericCharacters
- var lowerCasedCharacters
- var upperCasedCharacters
+function getAllowedChar(options) {
+
+  var allowedCharacters = "";
+  // if (options.incspecialCharacters === true) {
+  //   allowedCharacters = allowedCharacters + specialCharacters.join("");
+  // }
+  // else {
+  //   allowedCharacters = allowedCharacters + "";
+  // }
+  // Note: above commented code is the same as below code using short form.
+  allowedCharacters += options.incspecialCharacters ? specialCharacters.join("") : "";
+  allowedCharacters += options.incnumericCharacters ? numericCharacters.join("") : "";
+  allowedCharacters += options.inclowerCasedCharacters ? lowerCasedCharacters.join("") : "";
+  allowedCharacters += options.incupperCasedCharacters ? upperCasedCharacters.join("") : "";
+  // console.log(allowedCharacters);
+
+  return allowedCharacters.split("")
+
 }
 
-// Function for getting a random element from an array
-function getRandom(arr) {
-for (let i = 0; i < array.length; i++) {
-  const element = array[i];
-function random(mn, mx) {
-    return Math.random() * (mx - mn) + mn;
+// Defining the password length and alart to confirm the charaters.
+function getUserOptions() {
+  var passwordLength = parseInt(prompt("How long is the password. Password length should be 8 to 128."))
+  if (passwordLength < 8 || passwordLength > 128) {
+    return getUserOptions()
+  }
+  var incspecialCharacters = confirm("Do you require Special characters?");
+  var incnumericCharacters = confirm("Do you require Numeric characters?");
+  var inclowerCasedCharacters = confirm("Do you require Lower case?");
+  var incupperCasedCharacters = confirm("Do you require Upper case?");
+  return {
+    incspecialCharacters,
+    incnumericCharacters,
+    inclowerCasedCharacters,
+    incupperCasedCharacters,
+    passwordLength,
+  }
 }
+var userOptions = getUserOptions()
+var allowedCharacters = getAllowedChar(userOptions)
+
+
+// Function for getting a random element from an array
+function getRandom(array) {
+  var randomCharacter
+  var randomindex = Math.floor(Math.random() * array.length);
+  randomCharacter = array[randomindex];
+  // console.log(randomCharacter);
+
+  return randomCharacter;
 }
 
 // Function to generate password with user input
 function generatePassword() {
+  console.log(userOptions.passwordLength);
 
-  let characters = '';
-  if(specialCharacters)    
-    characters : specialCharacters
-
-  if(numericCharacters){
-      characters : specialCharacters ;
-
-  
-
+  var password = '';
+  for (let index = 0; index < userOptions.passwordLength; index++) {
+    password = password + getRandom(allowedCharacters)
 
   }
+  // console.log(password);
+  return password;
 }
 
 // Get references to the #generate element
@@ -136,5 +170,7 @@ function writePassword() {
 
 // Add event listener to generate button
 generateBtn.addEventListener('click', writePassword);
+
+
 
 

@@ -89,6 +89,8 @@ var upperCasedCharacters = [
 ];
 
 
+var getUserOptions
+var allowedCharacters
 
 // Function to prompt user for password options
 function getAllowedChar(options) {
@@ -129,8 +131,7 @@ function getUserOptions() {
     passwordLength,
   }
 }
-var userOptions = getUserOptions()
-var allowedCharacters = getAllowedChar(userOptions)
+
 
 
 // Function for getting a random element from an array
@@ -162,6 +163,8 @@ var generateBtn = document.querySelector('#generate');
 
 // Write password to the #password input
 function writePassword() {
+userOptions = getUserOptions()
+allowedCharacters = getAllowedChar(userOptions)
   var password = generatePassword();
   var passwordText = document.querySelector('#password');
 
